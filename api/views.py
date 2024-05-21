@@ -19,3 +19,9 @@ class OrdersView(APIView):
         serializer = OrderSerializer(orders, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
+class OrderDetailView(APIView):
+    
+    def get(self, request, pk):
+        orders = get_object_or_404(Order, pk=pk)
+        serializer = OrderSerializer(orders)
+        return Response(serializer.data, status=status.HTTP_200_OK)
