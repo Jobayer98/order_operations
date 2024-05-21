@@ -20,7 +20,7 @@ class Order(models.Model):
     order_date = models.DateTimeField()
     
     def __str__(self) -> str:
-        return self.pk
+        return str(self.pk)
     
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
@@ -28,7 +28,7 @@ class OrderItem(models.Model):
     quantity = models.PositiveIntegerField()
     
     def __str__(self) -> str:
-        return f"{self.product.name} | {self.quantity}"
+        return f"{self.product.name} | {self.order.customer}"
     
 class Payment(models.Model):
     order_item = models.ForeignKey(OrderItem, on_delete=models.CASCADE)
@@ -37,4 +37,4 @@ class Payment(models.Model):
     amount = models.DecimalField(max_digits=9, decimal_places=2)
     
     def __str__(self) -> str:
-        return self.pk
+        return str(self.pk)
