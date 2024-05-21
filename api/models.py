@@ -16,22 +16,15 @@ class OrderStatus(models.Model):
         return self.name    
 class Order(models.Model):
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
-    order_status = models.ForeignKey(OrderStatus, on_delete=models.PROTECT)
+    order_status = models.ForeignKey(OrderStatus, on_delete=models.PROTECT, default=1)
+    product = models.ForeignKey(Product, on_delete=models.PROTECT, default=1)
     order_date = models.DateTimeField()
+    quantity = models.PositiveIntegerField(default=1)
     
     def __str__(self) -> str:
         return str(self.pk)
-    
-class OrderItem(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.PROTECT)
-    quantity = models.PositiveIntegerField()
-    
-    def __str__(self) -> str:
-        return f"{self.product.name} | {self.order.customer}"
-    
 class Payment(models.Model):
-    order_item = models.ForeignKey(OrderItem, on_delete=models.CASCADE)
+    order= models.ForeignKey(Order, on_delete=models.CASCADE, default=1)
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
     payment_date = models.DateTimeField()
     amount = models.DecimalField(max_digits=9, decimal_places=2)
