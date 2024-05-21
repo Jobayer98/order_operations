@@ -7,7 +7,7 @@ class Product(models.Model):
     stock_quantity = models.PositiveIntegerField()
     
     def __str__(self) -> str:
-        return self.name
+        return str(self.id)
 
 class OrderStatus(models.Model):
     name = models.CharField(max_length=150)
@@ -18,11 +18,12 @@ class Order(models.Model):
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
     order_status = models.ForeignKey(OrderStatus, on_delete=models.PROTECT, default=1)
     product = models.ForeignKey(Product, on_delete=models.PROTECT, default=1)
-    order_date = models.DateTimeField()
+    order_date = models.DateTimeField(auto_now=True)
     quantity = models.PositiveIntegerField(default=1)
     
     def __str__(self) -> str:
         return str(self.pk)
+    
 class Payment(models.Model):
     order= models.ForeignKey(Order, on_delete=models.CASCADE, default=1)
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
