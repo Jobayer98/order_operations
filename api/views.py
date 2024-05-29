@@ -5,11 +5,6 @@ from rest_framework import status
 
 from .models import Order
 from .serializers import OrderSerializer, OrderDetailSerializer
-
-
-class IndexView(APIView):
-    def get(self, request):
-        return Response({"url": "http://localhost:8000/api/orders"})
     
     
 class OrdersView(APIView):
